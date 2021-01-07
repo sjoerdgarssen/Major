@@ -9,7 +9,22 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-In this document all the figures of the thesis and the SI are made. The selfwritten functions are written in the other script document. Thus, the other script needs to be fully runned before executing this script. Note that some chunks can be used to make multiple models when running it two times with small adaptions in the script. When this yields for a chunk, then this is always indicated in the comments of that chunk. 
+In this document all the figures of the thesis and the SI are made. 
+The selfwritten functions are written in the other script document. 
+Thus, the other script needs to be fully runned before executing this script. 
+Note that some chunks can be used to make multiple models when running it two times with small adaptions in the script. 
+When this yields for a chunk, then this is always indicated in the comments of that chunk. 
+
+```{r}
+#open the data. In my computer it was stored in the M-drive as 'mamma.csv'.
+setwd("M:")
+raw_data=read.csv('mamma.csv', skip=8)
+c=raw_data[-c(1:3),2]
+c=ifelse(c=='Cancer',1,-1) #Cancer=1, healthy=-1
+X=raw_data[,c(10:138)] #get the 129 numerical variables
+X=X[-(1:3),] #delete 3 not needed rows (contained info about variable, not observations)
+X=X%>%apply(2,as.numeric)
+```
 
 ```{r}
 #In this Chunk the Model Selection plot is made. This is figure 2 in the paper.
